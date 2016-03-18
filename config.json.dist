@@ -1,0 +1,18 @@
+{
+  "gateway": {
+    "name": "ProfessionalV3",
+    "PSID": "",
+    "subID": "0",
+    "private_cert": "",
+    "private_key": "",
+    "private_key_pass": ""
+  },
+  "database": {
+    "host": "localhost",
+    "user": "",
+    "pass": "",
+    "name": "",
+    "prefix": "ide_"
+  }
+
+}
