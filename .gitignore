@@ -1,1 +1,10 @@
-config.json
+certificates/
+!certificates/.htaccess
+!certificates/index.html
+!certificates/abnamro.cer
+!certificates/frieslandbank.cer
+!certificates/idealcheckout.cer
+!certificates/ingbank.cer
+!certificates/private.cer
+!certificates/private.key
+!certificates/rabobank.cer
