@@ -7,11 +7,17 @@ use Bixie\IdealClient\Exception\IdealClientException;
 use Bixie\IdealClient\Utils\Utils;
 
 class IdealClient {
-
+	/**
+	 * @var \Gateway
+	 */
 	protected $gateway;
-
+	/**
+	 * @var IdealClientDatabase
+	 */
 	protected $database;
-
+	/**
+	 * @var array
+	 */
 	protected $config;
 
 	/**
@@ -59,11 +65,11 @@ class IdealClient {
 	}
 
 	public function doSetup ($order_id, $order_code) {
-		$this->getGateway()->doSetup($order_id, $order_code);
+		return $this->getGateway()->doSetup($order_id, $order_code);
 	}
 
 	public function doReturn () {
-		$this->getGateway()->doReturn($this);
+		return $this->getGateway()->doReturn($this);
 	}
 
 }
