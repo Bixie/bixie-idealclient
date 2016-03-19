@@ -14,4 +14,51 @@ class Utils {
 		return $sResult;
 	}
 
+	public static function getRootUrl ($iParent = 0) {
+
+		if (empty($_REQUEST['ROOT_URL'])) {
+
+			// Detect installation directory based on current URL
+			$sRootUrl = '';
+
+			// Detect scheme
+			if (isset($_SERVER['HTTPS']) && (strcasecmp($_SERVER['HTTPS'], 'ON') === 0)) {
+				$sRootUrl .= 'https://';
+			} else {
+				$sRootUrl .= 'http://';
+			}
+
+			// Detect domain
+			$sRootUrl .= $_SERVER['HTTP_HOST'];
+
+			// Detect port
+			if ((strpos($_SERVER['HTTP_HOST'], ':') === false) && isset($_SERVER['SERVER_PORT'])) {
+				if (isset($_SERVER['HTTPS']) && (strcasecmp($_SERVER['HTTPS'], 'ON') === 0)) {
+					if ((strcmp($_SERVER['SERVER_PORT'], '443') !== 0) && (strcmp($_SERVER['SERVER_PORT'], '80') !== 0)) {
+						$sRootUrl .= ':' . $_SERVER['SERVER_PORT'];
+					}
+				} elseif (strcmp($_SERVER['SERVER_PORT'], '80') !== 0) {
+					$sRootUrl .= ':' . $_SERVER['SERVER_PORT'];
+				}
+			}
+
+			$sRootUrl .= '/';
+
+			// Detect path
+			if (isset($_SERVER['SCRIPT_NAME'])) {
+				$a = explode('/', substr($_SERVER['SCRIPT_NAME'], 1));
+
+				while (sizeof($a) > ($iParent + 1)) {
+					$sRootUrl .= $a[0] . '/';
+					array_shift($a);
+				}
+			}
+
+			$_REQUEST['ROOT_URL'] = $sRootUrl;
+		}
+
+		return $_REQUEST['ROOT_URL'];
+	}
+
+
 }

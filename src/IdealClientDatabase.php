@@ -43,13 +43,31 @@ class IdealClientDatabase {
 	 * @param $order_code
 	 * @return IdealClientTransaction|bool
 	 */
-	public function findByOrderIdAndCode ($order_id, $order_code) {
+	public function findByOrder ($order_id, $order_code) {
 		$sql = sprintf("SELECT * FROM %s%s WHERE order_id = :order_id AND order_code = :order_code",
 			$this->config['prefix'],
 			self::TRANSACTION_TABLE
 		);
 		$stm = $this->getConnection()->prepare($sql);
 		$stm->execute(compact('order_id', 'order_code'));
+		if (!$res = $stm->fetch()) {
+			return false;
+		}
+		return new IdealClientTransaction($res);
+	}
+
+	/**
+	 * @param $transaction_id
+	 * @param $transaction_code
+	 * @return IdealClientTransaction|bool
+	 */
+	public function findByTransaction ($transaction_id, $transaction_code) {
+		$sql = sprintf("SELECT * FROM %s%s WHERE transaction_id = :transaction_id AND transaction_code = :transaction_code",
+			$this->config['prefix'],
+			self::TRANSACTION_TABLE
+		);
+		$stm = $this->getConnection()->prepare($sql);
+		$stm->execute(compact('transaction_id', 'transaction_code'));
 		if (!$res = $stm->fetch()) {
 			return false;
 		}

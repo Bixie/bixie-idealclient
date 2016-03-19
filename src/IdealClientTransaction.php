@@ -481,6 +481,9 @@ class IdealClientTransaction {
 		return $this;
 	}
 
+	public function addLogEntry ($message) {
+		$this->transaction_log = $message . "\n\n";
+	}
 
 
 }
