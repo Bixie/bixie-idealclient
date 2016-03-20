@@ -20,6 +20,10 @@ class IdealClient {
 	 * @var array
 	 */
 	protected $config;
+	/**
+	 * @var \Closure
+	 */
+	protected $updateCallback;
 
 	/**
 	 * IdealClient constructor.
@@ -32,6 +36,15 @@ class IdealClient {
 		if (!function_exists('Bixie\IdealClient\Utils\Http\idealcheckout_doHttpRequest')) {
 			require __DIR__ . '/Utils/Http.php';
 		}
+	}
+
+	/**
+	 * @param \Closure $updateCallback
+	 * @return IdealClient
+	 */
+	public function setUpdateCallback ($updateCallback) {
+		$this->updateCallback = $updateCallback;
+		return $this;
 	}
 
 	/**
@@ -91,7 +104,9 @@ class IdealClient {
 	 * @param IdealClientTransaction $transaction
 	 */
 	public function updateStatus (IdealClientTransaction $transaction) {
-		//todo Closure?
+		if (is_callable($this->updateCallback)) {
+			call_user_func($this->updateCallback, $transaction);
+		}
 	}
 
 	/**
