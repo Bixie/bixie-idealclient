@@ -92,6 +92,10 @@ class IdealClientTransaction {
 	/**
 	 * @var string
 	 */
+	public $transaction_notify_url;
+	/**
+	 * @var string
+	 */
 	public $transaction_log;
 
 	/**
@@ -104,8 +108,7 @@ class IdealClientTransaction {
 		}
 	}
 
-	public function toArray () {
-		$data = [];
+	public function toArray ($data = [], $ignore = []) {
 		foreach (get_object_vars($this) as $key => $value) {
 			switch ($key) {
 				case 'order_params':
@@ -119,7 +122,7 @@ class IdealClientTransaction {
 					break;
 			}
 		}
-		return $data;
+		return array_diff_key($data, array_flip($ignore));
 	}
 
 
@@ -462,6 +465,22 @@ class IdealClientTransaction {
 	 */
 	public function setTransactionFailureUrl ($transaction_failure_url) {
 		$this->transaction_failure_url = $transaction_failure_url;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getTransactionNotifyUrl () {
+		return $this->transaction_notify_url;
+	}
+
+	/**
+	 * @param string $transaction_notify_url
+	 * @return IdealClientTransaction
+	 */
+	public function setTransactionNotifyUrl ($transaction_notify_url) {
+		$this->transaction_notify_url = $transaction_notify_url;
 		return $this;
 	}
 
