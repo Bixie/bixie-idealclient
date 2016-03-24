@@ -110,7 +110,7 @@ class IdealClient {
 	}
 
 	/**
-	 * @return \Gateway
+	 * @return Gateway
 	 */
 	public function getGateway () {
 

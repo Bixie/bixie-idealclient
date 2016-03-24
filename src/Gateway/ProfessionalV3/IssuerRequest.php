@@ -55,7 +55,7 @@ class IssuerRequest extends IdealRequest {
 					if ($bFileCreated || (filemtime($sCacheFile) > strtotime('-24 Hours'))) {
 						// Read data from cache file
 						if ($sData = file_get_contents($sCacheFile)) {
-							return idealcheckout_unserialize($sData);
+							return unserialize($sData);
 						}
 					}
 				} else {
@@ -136,7 +136,7 @@ class IssuerRequest extends IdealRequest {
 
 					// Save data in cache?
 					if ($sCacheFile) {
-						file_put_contents($sCacheFile, idealcheckout_serialize($aIssuerList));
+						file_put_contents($sCacheFile, serialize($aIssuerList));
 					}
 
 					return $aIssuerList;
