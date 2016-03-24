@@ -28,15 +28,9 @@ class Gateway {
 	}
 
 	protected function setConfig ($config) {
-		// Fix temp path
-		if (empty($config['TEMP_PATH'])) {
-			$this->config['TEMP_PATH'] = dirname(dirname(__DIR__)) . '/temp';
-		}
 
-		// Fix certificate path
-		if (empty($config['CERTIFICATE_PATH'])) {
-			$this->config['CERTIFICATE_PATH'] = dirname(dirname(__DIR__)) . '/certificates';
-		}
+		$this->config['TEMP_PATH'] = !empty($config['TEMP_PATH']) ? $config['TEMP_PATH'] : dirname(dirname(__DIR__)) . '/temp';
+		$this->config['CERTIFICATE_PATH'] = !empty($config['CERTIFICATE_PATH']) ? $config['CERTIFICATE_PATH'] : dirname(dirname(__DIR__)) . '/certificates';
 
 	}
 

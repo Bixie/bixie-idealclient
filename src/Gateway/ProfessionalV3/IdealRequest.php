@@ -60,7 +60,7 @@ class IdealRequest {
 
 	// Should point to directory with .cer and .key files
 	public function setSecurePath ($sPath) {
-		$this->sSecurePath = $sPath;
+		$this->sSecurePath = rtrim($sPath, '/') . '/';
 	}
 
 	// Should point to directory where cache is strored
