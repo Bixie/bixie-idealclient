@@ -105,7 +105,7 @@ class Gateway extends GatewayBase {
 			$this->client->saveTransaction($transaction);
 
 			$result['issuerlist'] = [
-				'action' => Utils::getRootUrl() . 'index.php?task=transaction&order_id=' . $transaction->getOrderId() . '&order_code=' . $transaction->getOrderCode(),
+				'action' => Utils::getRootUrl() . 'handler.php?task=transaction&order_id=' . $transaction->getOrderId() . '&order_code=' . $transaction->getOrderCode(),
 				'issuers' => $issuerList,
 			];
 
@@ -134,7 +134,7 @@ class Gateway extends GatewayBase {
 
 
 		// Lookup transaction
-		if (!$transaction = $this->client->findByTransaction($_GET['transaction_id'], $_GET['transaction_code'])) {
+		if (!$transaction = $this->client->findByOrder($_GET['order_id'], $_GET['order_code'])) {
 
 			throw new IdealClientResultException('Transaction not found.');
 
@@ -161,7 +161,7 @@ class Gateway extends GatewayBase {
 
 			$transactionRequest->setIssuerId($issuer_id);
 			$transactionRequest->setEntranceCode($transaction->getTransactionCode());
-			$transactionRequest->setReturnUrl(Utils::getRootUrl() . 'index.php?task=return');
+			$transactionRequest->setReturnUrl(Utils::getRootUrl() . 'handler.php?task=return');
 
 
 			// Find TransactionID
@@ -310,35 +310,35 @@ class Gateway extends GatewayBase {
 			// Set status message
 			if (strcmp($transaction->getTransactionStatus(), 'SUCCESS') === 0) {
 
-				$data['messages'][] = 'Payment succesfully received.';
-				$data['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
+				$result['messages'] = 'Payment succesfully received.';
+				$result['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
 
 			} elseif ((strcmp($transaction->getTransactionStatus(), 'OPEN') === 0) && !empty($transaction->getTransactionUrl())) {
-				$data['messages'][] = 'Payment not finished.';
+				$result['messages'] = 'Payment not finished.';
 
 				if ($transaction->getTransactionUrl()) {
-					$data['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars($transaction->getTransactionUrl()) . '">Continue<i class="uk-icon-angle-double-right uk-margin-small-left"></i></a>';
+					$result['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars($transaction->getTransactionUrl()) . '">Continue<i class="uk-icon-angle-double-right uk-margin-small-left"></i></a>';
 				}
 			} else {
 				if (strcasecmp($transaction->getTransactionStatus(), 'CANCELLED') === 0) {
 
-					$data['messages'][] = 'Payment is cancelled.';
-					$data['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
+					$result['messages'] = 'Payment is cancelled.';
+					$result['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
 
 				} elseif (strcasecmp($transaction->getTransactionStatus(), 'EXPIRED') === 0) {
 
-					$data['messages'][] = 'Payment has expired.';
-					$data['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
+					$result['messages'] = 'Payment has expired.';
+					$result['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
 
 				} else {
-					$data['messages'][] = 'Payment has failed.';
-					$data['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
+					$result['messages'] = 'Payment has failed.';
+					$result['html'] .= '<a class="uk-button uk-margin" href="' . htmlspecialchars(Utils::getRootUrl()) . '">Back to main site</a>';
 				}
 
 				if ($transaction->getTransactionPaymentUrl()) {
-					$data['html'] .= '<p><a href="' . htmlentities($transaction->getTransactionPaymentUrl()) . '">kies een andere betaalmethode</a></p>';
+					$result['html'] .= '<p><a href="' . htmlentities($transaction->getTransactionPaymentUrl()) . '">kies een andere betaalmethode</a></p>';
 				} elseif ($transaction->getTransactionFailureUrl()) {
-					$data['html'] .= '<p><a href="' . htmlentities($transaction->getTransactionFailureUrl()) . '">terug naar de website</a></p>';
+					$result['html'] .= '<p><a href="' . htmlentities($transaction->getTransactionFailureUrl()) . '">terug naar de website</a></p>';
 				}
 			}
 

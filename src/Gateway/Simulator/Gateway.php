@@ -51,10 +51,10 @@ class Gateway extends GatewayBase {
 	<input name="order_id" type="hidden" value="' . htmlspecialchars($transaction->getOrderId()) . '">
 	<input name="order_description" type="hidden" value="' . htmlspecialchars($transaction->getTransactionDescription()) . '">
 	<input name="order_amount" type="hidden" value="' . htmlspecialchars($transaction->getTransactionAmount()) . '">
-	<input name="url_success" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'index.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=SUCCESS') . '">
-	<input name="url_pending" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'index.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=PENDING') . '">
-	<input name="url_cancel" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'index.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=CANCELLED') . '">
-	<input name="url_error" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'index.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=FAILURE') . '">
+	<input name="url_success" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'handler.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=SUCCESS') . '">
+	<input name="url_pending" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'handler.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=PENDING') . '">
+	<input name="url_cancel" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'handler.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=CANCELLED') . '">
+	<input name="url_error" type="hidden" value="' . htmlspecialchars(Utils::getRootUrl() . 'handler.php?task=return&transaction_id=' . $transaction->getTransactionId() . '&transaction_code=' . $transaction->getTransactionCode() . '&status=FAILURE') . '">
 	<button type="submit" class="uk-button">Continue<i class="uk-icon-angle-double-right uk-margin-small-left"></i></button>
 </form>';
 
