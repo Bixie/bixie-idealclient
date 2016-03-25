@@ -65,7 +65,7 @@ class IdealRequest {
 
 	// Should point to directory where cache is strored
 	public function setCachePath ($sPath = false) {
-		$this->sCachePath = $sPath;
+		$this->sCachePath = rtrim($sPath, '/') . '/';
 	}
 
 	// Set password to generate signatures
