@@ -1,7 +1,4 @@
 {
-  "root": "",
-  "shared_pass": "password",
-  "notify_url": "http://www.example.com/post_callback.php",
   "gateway": {
     "name": "ProfessionalV3",
     "PSID": "",
